@@ -275,6 +275,27 @@ func (inst *golangSourceCodeBuilder) buildOnDestroy(com *ComConfigInfo, builder 
 }
 
 func (inst *golangSourceCodeBuilder) buildOnInject(com *ComConfigInfo, builder *strings.Builder) error {
+
+	// todo ...
+
+	const tab = "\t\t"
+	const nl = "\n"
+	const create = false
+	const hash = true
+
+	packagePath := com.TargetTypePackagePath
+	packageToken := inst.getPackageNamePrefix(packagePath, create, hash)
+	simpleName := com.TargetTypeSimpleName
+	funcName := com.InjectionFuncName
+
+	if funcName == "" {
+		return nil
+	}
+
+	builder.WriteString(tab + "OnInject: func(obj lang.Object,context application.RuntimeContext) error {" + nl)
+	builder.WriteString(tab + "    target := obj.(*" + packageToken + "." + simpleName + ")" + nl)
+	builder.WriteString(tab + "    return " + funcName + "(target,context)" + nl)
+	builder.WriteString(tab + "}," + nl)
 	return nil
 }
 

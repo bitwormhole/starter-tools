@@ -1,11 +1,10 @@
 package main
 
 import (
-	"errors"
 	"os"
-	"strconv"
 
 	"github.com/bitwormhole/starter-tools/tools/configen"
+	"github.com/bitwormhole/starter-tools/tools/help"
 )
 
 func main() {
@@ -16,25 +15,44 @@ func main() {
 	panic(err)
 }
 
-func tryMain(args []string) error {
-	cmd, err := tryGetArgument(args, 1)
-	if err != nil {
-		return err
+// return: (command, more...args)
+func parseArguments(args []string) (string, []string) {
+	command := ""
+	more := []string{}
+	const CMD_INDEX = 1
+	if args != nil {
+		for index := range args {
+			item := args[index]
+			if index == CMD_INDEX {
+				command = item
+			} else if index > CMD_INDEX {
+				more = append(more, item)
+			}
+		}
 	}
-	args = args[2:]
-	if cmd == "configen" {
-		return configen.Run(args)
-	}
-	return errors.New("bad command: " + cmd)
+	return command, more
 }
 
-func tryGetArgument(args []string, index int) (string, error) {
-	if args == nil {
-		return "", errors.New("args==nil")
+func tryMain(args []string) error {
+
+	cmd, more := parseArguments(args)
+	args = more
+
+	if cmd == "about" {
+		return help.RunAbout(args)
+
+	} else if cmd == "configen" {
+		return configen.Run(args)
+
+	} else if cmd == "help" {
+		return help.RunHelpDetail(args)
+
+	} else if cmd == "version" {
+		return help.RunVersion(args)
+
+	} else {
+		// same as 'help'
+		return help.RunHelpDetail(args)
 	}
-	size := len(args)
-	if index < 0 || index >= size {
-		return "", errors.New("index out of args array: " + strconv.Itoa(index))
-	}
-	return args[index], nil
+	//	return errors.New("bad command: " + cmd)
 }

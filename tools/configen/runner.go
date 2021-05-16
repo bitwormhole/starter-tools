@@ -21,6 +21,11 @@ func (inst *configenRunner) run() error {
 		return err
 	}
 
+	err = inst.loadConfigFile()
+	if err != nil {
+		return err
+	}
+
 	err = inst.scanPWD()
 	if err != nil {
 		return err
@@ -51,7 +56,22 @@ func (inst *configenRunner) run() error {
 
 func (inst *configenRunner) init() error {
 	inst.context.OutputFileName = "auto_generated_by_starter_configen.go"
+	inst.context.ConfigFileName = "configen.properties"
 	return nil
+}
+
+func (inst *configenRunner) loadConfigFile() error {
+
+	context := inst.context
+	filename := context.ConfigFileName
+	pwd := context.PWD
+	file := pwd.GetChild(filename)
+
+	data, err := file.GetIO().ReadText()
+	if err == nil {
+		strings.TrimSpace(data) // NOP
+	}
+	return err
 }
 
 func (inst *configenRunner) scanPWD() error {

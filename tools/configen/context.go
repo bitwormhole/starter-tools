@@ -10,4 +10,5 @@ type configenContext struct {
 	PackageName       string
 	OutputCode        string
 	OutputFileName    string
+	ConfigFileName    string
 }
