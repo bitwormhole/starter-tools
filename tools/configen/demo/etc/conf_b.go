@@ -7,7 +7,7 @@ import (
 	"github.com/bitwormhole/starter/application"
 )
 
-func car11(t *car.Body, context application.RuntimeContext) error {
+func car11(t *car.Body, context application.Context) error {
 
 	// [component]
 	// class=abc
@@ -15,7 +15,7 @@ func car11(t *car.Body, context application.RuntimeContext) error {
 	return nil
 }
 
-func car22(t *car.Body, context application.RuntimeContext) error {
+func car22(t *car.Body, context application.Context) error {
 
 	// [component]
 	// id=body2
@@ -28,7 +28,7 @@ func car22(t *car.Body, context application.RuntimeContext) error {
 	return nil
 }
 
-func builder3(t *xstr.Builder, context application.RuntimeContext) error {
+func builder3(t *xstr.Builder, context application.Context) error {
 
 	// [component]
 	//    aliases= a1 a2 a3

@@ -1,7 +1,7 @@
-github.com/bitwormhole/starter v0.0.0-20210421134329-39be6c1cc484 h1:r4VhsTX8SlkYkFyRgBU4FB11531zCLo/085Y+JdXOLM=
-github.com/bitwormhole/starter v0.0.0-20210421134329-39be6c1cc484/go.mod h1:pOKhC2K0le6UK1OnZElQ4IqVYeVwP6qiMJxVhQp/AEA=
-github.com/bitwormhole/starter v0.0.0-20210512075046-5f4dad810e3c h1:dq9XhWtoRzND5daTu1L4cXAZNjCy9tfDcGiFb+rXAMs=
-github.com/bitwormhole/starter v0.0.0-20210512075046-5f4dad810e3c/go.mod h1:pOKhC2K0le6UK1OnZElQ4IqVYeVwP6qiMJxVhQp/AEA=
+github.com/bitwormhole/starter v0.0.0-20210523055258-63eb03f6323f h1:KfAEXJ9s2F1s05pRfwIKE8GhktkglAo5IPgOkkv7a+E=
+github.com/bitwormhole/starter v0.0.0-20210523055258-63eb03f6323f/go.mod h1:pOKhC2K0le6UK1OnZElQ4IqVYeVwP6qiMJxVhQp/AEA=
+github.com/bitwormhole/starter v0.0.0-20210523102230-58cc4028e73e h1:qqMddEfqJdG68NOtb7BqzqI1Yg/oBL6co1pBSG0kVDE=
+github.com/bitwormhole/starter v0.0.0-20210523102230-58cc4028e73e/go.mod h1:pOKhC2K0le6UK1OnZElQ4IqVYeVwP6qiMJxVhQp/AEA=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE=

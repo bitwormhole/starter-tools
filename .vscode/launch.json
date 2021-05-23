@@ -11,7 +11,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}",
             "env": {
-                "PWD": "D:\\home\\xukun\\github\\starter-tools\\tools\\configen\\demo\\etc"
+                "PWD": "D:\\home\\xukun\\git.bitwormhole\\starter-tools\\tools\\configen\\demo\\etc"
             },
             "args": [
                 "configen"

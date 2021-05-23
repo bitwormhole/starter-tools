@@ -20,7 +20,7 @@ func Config(cb application.ConfigBuilder) error {
 		OnNew: func() lang.Object {
 		    return &strings_873be872.Builder{}
 		},
-		OnInject: func(obj lang.Object,context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object,context application.Context) error {
 		    target := obj.(*strings_873be872.Builder)
 		    return builder(target,context)
 		},
@@ -35,7 +35,7 @@ func Config(cb application.ConfigBuilder) error {
 		OnNew: func() lang.Object {
 		    return &strings_873be872.Builder{}
 		},
-		OnInject: func(obj lang.Object,context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object,context application.Context) error {
 		    target := obj.(*strings_873be872.Builder)
 		    return builder3(target,context)
 		},
@@ -50,7 +50,7 @@ func Config(cb application.ConfigBuilder) error {
 		OnNew: func() lang.Object {
 		    return &car_63674827.Body{}
 		},
-		OnInject: func(obj lang.Object,context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object,context application.Context) error {
 		    target := obj.(*car_63674827.Body)
 		    return car1(target,context)
 		},
@@ -65,7 +65,7 @@ func Config(cb application.ConfigBuilder) error {
 		OnNew: func() lang.Object {
 		    return &car_63674827.Body{}
 		},
-		OnInject: func(obj lang.Object,context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object,context application.Context) error {
 		    target := obj.(*car_63674827.Body)
 		    return car11(target,context)
 		},
@@ -80,7 +80,7 @@ func Config(cb application.ConfigBuilder) error {
 		OnNew: func() lang.Object {
 		    return &car_63674827.Body{}
 		},
-		OnInject: func(obj lang.Object,context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object,context application.Context) error {
 		    target := obj.(*car_63674827.Body)
 		    return car2(target,context)
 		},
@@ -103,7 +103,7 @@ func Config(cb application.ConfigBuilder) error {
 		    target := obj.(*car_63674827.Body)
 		    return target.Stop()
 		},
-		OnInject: func(obj lang.Object,context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object,context application.Context) error {
 		    target := obj.(*car_63674827.Body)
 		    return car22(target,context)
 		},
@@ -118,7 +118,7 @@ func Config(cb application.ConfigBuilder) error {
 		OnNew: func() lang.Object {
 		    return &car_63674827.Door{}
 		},
-		OnInject: func(obj lang.Object,context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object,context application.Context) error {
 		    target := obj.(*car_63674827.Door)
 		    return door(target,context)
 		},

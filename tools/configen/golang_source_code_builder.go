@@ -45,7 +45,7 @@ func (inst *golangSourceCodeBuilder) Config(cb application.ConfigBuilder) error 
 			return &lang.TryChain{}
 		},
 
-		OnInject: func(obj lang.Object, context application.RuntimeContext) error {
+		OnInject: func(obj lang.Object, context application.Context) error {
 			target := obj.(*lang.TryChain)
 			// inject(target , context)
 			return target.Result()
@@ -292,7 +292,7 @@ func (inst *golangSourceCodeBuilder) buildOnInject(com *ComConfigInfo, builder *
 		return nil
 	}
 
-	builder.WriteString(tab + "OnInject: func(obj lang.Object,context application.RuntimeContext) error {" + nl)
+	builder.WriteString(tab + "OnInject: func(obj lang.Object,context application.Context) error {" + nl)
 	builder.WriteString(tab + "    target := obj.(*" + packageToken + "." + simpleName + ")" + nl)
 	builder.WriteString(tab + "    return " + funcName + "(target,context)" + nl)
 	builder.WriteString(tab + "}," + nl)
