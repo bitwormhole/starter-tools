@@ -3,7 +3,7 @@ package etc
 import (
 	xstr "strings"
 
-	"github.com/bitwormhole/starter-tools/tools/configen/demo/car"
+	"github.com/bitwormhole/starter-tools/tools/configen1/demo/car"
 	"github.com/bitwormhole/starter/application"
 )
 

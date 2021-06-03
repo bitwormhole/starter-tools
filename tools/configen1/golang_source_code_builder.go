@@ -1,4 +1,4 @@
-package configen
+package configen1
 
 import (
 	"crypto/sha1"

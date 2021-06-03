@@ -3,7 +3,9 @@ package main
 import (
 	"os"
 
-	"github.com/bitwormhole/starter-tools/tools/configen"
+	"github.com/bitwormhole/starter-tools/tools/configen1"
+	"github.com/bitwormhole/starter-tools/tools/configen2"
+	"github.com/bitwormhole/starter-tools/tools/configenx"
 	"github.com/bitwormhole/starter-tools/tools/help"
 )
 
@@ -42,7 +44,13 @@ func tryMain(args []string) error {
 		return help.RunAbout(args)
 
 	} else if cmd == "configen" {
-		return configen.Run(args)
+		return configenx.Run(args)
+
+	} else if cmd == "configen1disable" {
+		return configen1.Run(args)
+
+	} else if cmd == "configen2disable" {
+		return configen2.Run(args)
 
 	} else if cmd == "help" {
 		return help.RunHelpDetail(args)
