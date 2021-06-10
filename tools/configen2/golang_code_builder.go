@@ -1,8 +1,9 @@
 package configen2
 
 import (
-	"sort"
-	"strings"
+	"errors"
+
+	"github.com/bitwormhole/starter/application"
 )
 
 type CodeBuilder interface {
@@ -12,100 +13,59 @@ type CodeBuilder interface {
 ////////////////////////////////////////////////////////////////////////////////
 
 type golangCodeBuilder struct {
-	context *Context
-	buffer  strings.Builder
-
-	// 特殊字符
-	NL    string
-	TAB   string
-	SPACE string
+	templateFactory CodeTemplateFactory
+	context         application.Context
 }
 
-func (inst *golangCodeBuilder) init(ctx *Context) CodeBuilder {
-
-	inst.NL = "\n"
-	inst.SPACE = " "
-	inst.TAB = "\t"
-
-	inst.context = ctx
+func (inst *golangCodeBuilder) _impl() CodeBuilder {
 	return inst
 }
 
+func (inst *golangCodeBuilder) init(ctx *Context) error {
+
+	ac := ctx.AppContext
+	obj, err := ac.GetComponent("#configen2-main-template-factory")
+	if err != nil {
+		return err
+	}
+
+	factory, ok := obj.(CodeTemplateFactory)
+	if !ok {
+		return errors.New("com.(CodeTemplateFactory) return false")
+	}
+
+	inst.context = ctx.AppContext
+	inst.templateFactory = factory
+	return nil
+}
+
+func (inst *golangCodeBuilder) prepareInjectMethods1(dom *Dom2root) {
+	table := dom.Components
+	for key := range table {
+		com := table[key]
+		inst.prepareInjectMethods2(com)
+	}
+}
+
+func (inst *golangCodeBuilder) prepareInjectMethods2(dom *Dom2component) {
+	table := dom.InjectionMap
+	for key := range table {
+		item := table[key]
+		name := item.FieldName
+		item.InjectionGetterMethod = "__get_" + name + "__"
+	}
+}
+
 func (inst *golangCodeBuilder) Build(dom *Dom2root) (string, error) {
-	inst.buffer.Reset()
 
-	err := inst.buildPackage(dom)
+	inst.prepareInjectMethods1(dom)
+
+	// context
+	bc := &BuildingContext{}
+	bc.DOM = dom
+	template, err := inst.templateFactory.Create(inst.context)
 	if err != nil {
 		return "", err
 	}
-
-	err = inst.buildImports(dom)
-	if err != nil {
-		return "", err
-	}
-
-	err = inst.buildConfigFunc(dom)
-	if err != nil {
-		return "", err
-	}
-
-	code := inst.buffer.String()
-	return code, nil
-}
-
-func (inst *golangCodeBuilder) buildPackage(dom *Dom2root) error {
-	inst.buffer.WriteString("package ")
-	inst.buffer.WriteString(dom.PackageName)
-	inst.buffer.WriteString(inst.NL)
-	inst.buffer.WriteString(inst.NL)
-	return nil
-}
-
-func (inst *golangCodeBuilder) buildImports(dom *Dom2root) error {
-
-	all := dom.Imports
-	keys := []string{}
-	for key := range all {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	inst.buffer.WriteString("import (" + inst.NL)
-
-	for index := range keys {
-		path := keys[index]
-		alias := all[path]
-		if alias == "_" {
-			alias = ""
-		}
-		inst.buffer.WriteString(inst.TAB)
-		inst.buffer.WriteString(alias)
-		inst.buffer.WriteString(inst.SPACE)
-		inst.buffer.WriteString(inst.wrapString(path))
-		inst.buffer.WriteString(inst.NL)
-	}
-
-	inst.buffer.WriteString(")")
-	inst.buffer.WriteString(inst.NL)
-	inst.buffer.WriteString(inst.NL)
-	return nil
-}
-
-func (inst *golangCodeBuilder) wrapString(str string) string {
-	const tag = "\""
-	return tag + str + tag
-}
-
-func (inst *golangCodeBuilder) buildConfigFunc(dom *Dom2root) error {
-
-	inst.buffer.WriteString("func Config(configbuilder application.ConfigBuilder) error {")
-	inst.buffer.WriteString(inst.NL)
-
-	inst.buffer.WriteString("}")
-	inst.buffer.WriteString(inst.NL)
-	inst.buffer.WriteString(inst.NL)
-	return nil
-}
-
-func (inst *golangCodeBuilder) buildConfigFuncComItem(dom *Dom2root) error {
-	return nil
+	return template.Build(bc)
 }

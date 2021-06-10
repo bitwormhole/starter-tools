@@ -2,6 +2,7 @@ package configen2
 
 import (
 	"crypto/sha1"
+	"errors"
 	"strings"
 
 	"github.com/bitwormhole/starter/util"
@@ -10,7 +11,8 @@ import (
 type ImportManager interface {
 	AddImport(path string)
 	AddImportWithAlias(alias string, path string)
-	AddImportWithoutAlias(path string)
+	AddImportWithoutHash(path string)
+	FindAliasByPath(path string) (string, error)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,20 +28,30 @@ func (inst *defaultImportManager) init(ctx *Context) ImportManager {
 	return inst
 }
 
+func (inst *defaultImportManager) FindAliasByPath(path string) (string, error) {
+	table := inst.context.DOM2.Imports
+	alias := table[path]
+	if alias == "" {
+		return "", errors.New("no import from path:" + path)
+	}
+	return alias, nil
+}
+
 func (inst *defaultImportManager) AddImport(path string) {
-	alias := inst.makeAliasByPath(path)
+	alias := inst.makeAliasByPath(path, true)
 	inst.innerAddImport(alias, path)
 }
 
 func (inst *defaultImportManager) AddImportWithAlias(alias string, path string) {
 	if alias == "" {
-		alias = inst.makeAliasByPath(path)
+		alias = inst.makeAliasByPath(path, true)
 	}
 	inst.innerAddImport(alias, path)
 }
 
-func (inst *defaultImportManager) AddImportWithoutAlias(path string) {
-	inst.innerAddImport(inst.markupNoAlias, path)
+func (inst *defaultImportManager) AddImportWithoutHash(path string) {
+	alias := inst.makeAliasByPath(path, false)
+	inst.innerAddImport(alias, path)
 }
 
 func (inst *defaultImportManager) innerAddImport(alias string, path string) {
@@ -52,13 +64,17 @@ func (inst *defaultImportManager) innerAddImport(alias string, path string) {
 	table[path] = alias
 }
 
-func (inst *defaultImportManager) makeAliasByPath(path string) string {
+func (inst *defaultImportManager) makeAliasByPath(path string, hash bool) string {
 
 	// name
 	name := path
 	index := strings.LastIndexByte(path, '/')
 	if index > 0 {
 		name = path[index+1:]
+	}
+
+	if !hash {
+		return name
 	}
 
 	// sum

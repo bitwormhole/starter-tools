@@ -6,20 +6,21 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/bitwormhole/starter/application"
 	"github.com/bitwormhole/starter/io/fs"
 )
 
-func Run(args []string) error {
+func Run(ac application.Context, args []string) error {
 	r := &runner{}
-	return r.Run()
+	return r.Run(ac)
 }
 
 type runner struct {
 }
 
-func (inst *runner) Run() error {
+func (inst *runner) Run(ac application.Context) error {
 
-	context := &Context{}
+	context := &Context{AppContext: ac}
 
 	err := inst.doInit(context)
 	if err != nil {
@@ -57,6 +58,13 @@ func (inst *runner) doInit(ctx *Context) error {
 	}
 
 	dir := fs.Default().GetPath(pwd)
+
+	codeBuilder := &golangCodeBuilder{}
+	err := codeBuilder.init(ctx)
+	if err != nil {
+		return err
+	}
+
 	ctx.PWD = dir
 	ctx.InputFile = dir.GetChild("configen.properties")
 	ctx.OutputFile = dir.GetChild("auto_generated_by_starter_configen.go")
@@ -65,7 +73,7 @@ func (inst *runner) doInit(ctx *Context) error {
 	ctx.DirectoryScanner = (&defaultDirectoryScanner{}).init(ctx)
 	ctx.SourceFileScanner = (&defaultSourceFileScanner{}).init(ctx)
 	ctx.Imports = (&defaultImportManager{}).init(ctx)
-	ctx.CodeBuilder = (&golangCodeBuilder{}).init(ctx)
+	ctx.CodeBuilder = codeBuilder
 	ctx.Dom2Builder = (&defaultDom2Builder{}).init(ctx)
 
 	ctx.DOM1.Documents = make(map[string]*Dom1doc)
@@ -117,5 +125,5 @@ func (inst *runner) doSaveCode(ctx *Context) error {
 	}
 
 	fmt.Println("Save code to file:", file.Path())
-	return nil
+	return file.GetIO().WriteText(code, nil)
 }

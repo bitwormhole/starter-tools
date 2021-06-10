@@ -4,13 +4,15 @@ import (
 	"errors"
 	"os"
 
+	"github.com/bitwormhole/starter-tools/cmd"
 	"github.com/bitwormhole/starter-tools/tools/configen1"
 	"github.com/bitwormhole/starter-tools/tools/configen2"
+	"github.com/bitwormhole/starter/application"
 	"github.com/bitwormhole/starter/collection"
 	"github.com/bitwormhole/starter/io/fs"
 )
 
-func Run(args []string) error {
+func Run(ctx application.Context, args []string) error {
 
 	pwd, ok := os.LookupEnv("PWD")
 	if !ok {
@@ -35,10 +37,31 @@ func Run(args []string) error {
 	}
 
 	if ver == "1" {
-		return configen1.Run(args)
+		return configen1.Run(ctx, args)
 	} else if ver == "2" {
-		return configen2.Run(args)
+		return configen2.Run(ctx, args)
 	}
 
 	return errors.New("unsupported configen version:" + ver)
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+type CommandHandler struct {
+	context application.Context
+}
+
+func (inst *CommandHandler) _impl_() cmd.CommandHandler {
+	return inst
+}
+
+func (inst *CommandHandler) Init(context application.Context) error {
+	inst.context = context
+	return nil
+}
+
+func (inst *CommandHandler) Execute(cmd string, args []string) error {
+	return Run(inst.context, args)
+}
+
+////////////////////////////////////////////////////////////////////////////////

@@ -4,11 +4,15 @@ import (
 	"testing"
 
 	"github.com/bitwormhole/starter-tools/tools/configen1"
+	"github.com/bitwormhole/starter/application"
 )
 
 func TestConfigen(t *testing.T) {
+
 	args := []string{}
-	err := configen1.Run(args)
+	context, _ := application.Run(nil, args)
+
+	err := configen1.Run(context, args)
 	if err != nil {
 		t.Fatal(err)
 	}

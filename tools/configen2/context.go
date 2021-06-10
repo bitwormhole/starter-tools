@@ -1,6 +1,9 @@
 package configen2
 
-import "github.com/bitwormhole/starter/io/fs"
+import (
+	"github.com/bitwormhole/starter/application"
+	"github.com/bitwormhole/starter/io/fs"
+)
 
 type Context struct {
 	PWD             fs.Path
@@ -8,6 +11,7 @@ type Context struct {
 	OutputFile      fs.Path // the 'auto_generated_by_starter_configen.go'
 	ConfigenVersion string  // 'configen.version'='v2'
 	DryRun          bool
+	AppContext      application.Context
 
 	Dom2Builder       Dom2Builder
 	CodeBuilder       CodeBuilder

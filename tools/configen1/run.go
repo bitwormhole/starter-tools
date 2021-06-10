@@ -4,10 +4,11 @@ import (
 	"errors"
 	"os"
 
+	"github.com/bitwormhole/starter/application"
 	"github.com/bitwormhole/starter/io/fs"
 )
 
-func Run(args []string) error {
+func Run(ctx application.Context, args []string) error {
 
 	context := &configenContext{}
 

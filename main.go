@@ -1,20 +1,30 @@
 package main
 
 import (
+	"embed"
+	"errors"
+	"fmt"
 	"os"
 
-	"github.com/bitwormhole/starter-tools/tools/configen1"
-	"github.com/bitwormhole/starter-tools/tools/configen2"
-	"github.com/bitwormhole/starter-tools/tools/configenx"
-	"github.com/bitwormhole/starter-tools/tools/help"
+	"github.com/bitwormhole/starter-tools/cmd"
+	"github.com/bitwormhole/starter-tools/etc"
+	"github.com/bitwormhole/starter/application"
+	"github.com/bitwormhole/starter/application/config"
 )
 
+//go:embed src/main/resources
+var resources embed.FS
+
 func main() {
-	err := tryMain(os.Args)
-	if err == nil {
-		return
+
+	cb := config.NewBuilderFS(&resources, "src/main/resources")
+	cb.SetEnableLoadPropertiesFromArguments(true)
+	etc.Config(cb)
+
+	err := tryMain(cb)
+	if err != nil {
+		panic(err)
 	}
-	panic(err)
 }
 
 // return: (command, more...args)
@@ -35,8 +45,46 @@ func parseArguments(args []string) (string, []string) {
 	return command, more
 }
 
-func tryMain(args []string) error {
+func exec(context application.Context, cmd_name string, cmd_args []string) error {
 
+	o1, err := context.GetComponent("#commands")
+	if err != nil {
+		return err
+	}
+
+	cmdman, ok := o1.(*cmd.CommandManager)
+	if !ok {
+		return errors.New("obj.(*cmd.CommandManager): return false")
+	}
+
+	return cmdman.ExecuteCommand(cmd_name, cmd_args)
+}
+
+func tryMain(cb application.ConfigBuilder) error {
+
+	args := os.Args
+	cfg := cb.Create()
+	context, err := application.Run(cfg, args)
+	if err != nil {
+		return err
+	}
+
+	cmd, cmdArgs := parseArguments(args)
+	err = exec(context, cmd, cmdArgs)
+	if err != nil {
+		return err
+	}
+
+	code, err := application.Exit(context)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("exit with code ", code)
+	return nil
+}
+
+/*
 	cmd, more := parseArguments(args)
 	args = more
 
@@ -64,3 +112,4 @@ func tryMain(args []string) error {
 	}
 	//	return errors.New("bad command: " + cmd)
 }
+*/

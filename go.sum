@@ -8,6 +8,14 @@ github.com/bitwormhole/starter v0.0.6 h1:aDcpO9zj8x2LfzgwAHAGSb/TYQrK/lJASCXMsrW
 github.com/bitwormhole/starter v0.0.6/go.mod h1:Mv2MC4cWHU2eUs4793mL7pXL79pmjp1HJyA9bV8ZVMc=
 github.com/bitwormhole/starter v0.0.8 h1:Mgn7PzbuzsU0PUeJ8Mgi3+0VbuSVsmAsaQEVqMy3YTw=
 github.com/bitwormhole/starter v0.0.8/go.mod h1:Mv2MC4cWHU2eUs4793mL7pXL79pmjp1HJyA9bV8ZVMc=
+github.com/bitwormhole/starter v0.0.9 h1:F0PX80he0L7x7xyeg7V7TE9Ibg2wYXxUdGAmFv+ZTaE=
+github.com/bitwormhole/starter v0.0.9/go.mod h1:Mv2MC4cWHU2eUs4793mL7pXL79pmjp1HJyA9bV8ZVMc=
+github.com/bitwormhole/starter v0.0.10 h1:ZDeP7IK9Lag3SEmCQXArcA0tgjke8PE/uliq9ZENBnQ=
+github.com/bitwormhole/starter v0.0.10/go.mod h1:Mv2MC4cWHU2eUs4793mL7pXL79pmjp1HJyA9bV8ZVMc=
+github.com/bitwormhole/starter v0.0.11 h1:LthAebiezNrwWQrxsu6nxh8QCOwEqUSxsZceiFUWQ9Y=
+github.com/bitwormhole/starter v0.0.11/go.mod h1:Mv2MC4cWHU2eUs4793mL7pXL79pmjp1HJyA9bV8ZVMc=
+github.com/bitwormhole/starter v0.0.12 h1:SYbbpoHkkOMuiQwUQGR5I34fIvI9VV+1j5cGKjW4Zqg=
+github.com/bitwormhole/starter v0.0.12/go.mod h1:Mv2MC4cWHU2eUs4793mL7pXL79pmjp1HJyA9bV8ZVMc=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE=
