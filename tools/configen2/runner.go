@@ -42,6 +42,11 @@ func (inst *runner) Run(ac application.Context) error {
 		return err
 	}
 
+	err = inst.doGolangCodePostProcess(context)
+	if err != nil {
+		return err
+	}
+
 	err = inst.doSaveCode(context)
 	if err != nil {
 		return err
@@ -105,6 +110,12 @@ func (inst *runner) doBuildDom2(ctx *Context) error {
 	}
 
 	return nil
+}
+
+func (inst *runner) doGolangCodePostProcess(ctx *Context) error {
+	gcpp := &golangCodePostProcessor{}
+	gcpp.Init(ctx)
+	return gcpp.ReImportPackages()
 }
 
 func (inst *runner) doBuildCode(ctx *Context) error {

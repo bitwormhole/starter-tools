@@ -3,26 +3,23 @@
 
 package demo
 
-// <import>
-
-import (
+import(
 	errors "errors"
-	strings "strings"
-
 	configen1_ff6423 "github.com/bitwormhole/starter-tools/tools/configen1"
 	car_a924e5 "github.com/bitwormhole/starter-tools/tools/configen1/demo/car"
 	application "github.com/bitwormhole/starter/application"
 	config "github.com/bitwormhole/starter/application/config"
 	lang "github.com/bitwormhole/starter/lang"
+	strings "strings"
 )
 
-// </import>
 
 func Config(configbuilder application.ConfigBuilder) error {
 
 	cominfobuilder := &config.ComInfoBuilder{}
 	err := errors.New("OK")
 
+    
 	// builder
 	cominfobuilder.Reset()
 	cominfobuilder.ID("builder").Class("").Scope("").Aliases("")
@@ -46,9 +43,9 @@ func Config(configbuilder application.ConfigBuilder) error {
 		return nil
 	})
 	err = cominfobuilder.CreateTo(configbuilder)
-	if err != nil {
-		return err
-	}
+    if err !=nil{
+        return err
+    }
 
 	// car1
 	cominfobuilder.Reset()
@@ -73,9 +70,9 @@ func Config(configbuilder application.ConfigBuilder) error {
 		return nil
 	})
 	err = cominfobuilder.CreateTo(configbuilder)
-	if err != nil {
-		return err
-	}
+    if err !=nil{
+        return err
+    }
 
 	// car2
 	cominfobuilder.Reset()
@@ -100,9 +97,9 @@ func Config(configbuilder application.ConfigBuilder) error {
 		return nil
 	})
 	err = cominfobuilder.CreateTo(configbuilder)
-	if err != nil {
-		return err
-	}
+    if err !=nil{
+        return err
+    }
 
 	// door
 	cominfobuilder.Reset()
@@ -127,12 +124,14 @@ func Config(configbuilder application.ConfigBuilder) error {
 		return nil
 	})
 	err = cominfobuilder.CreateTo(configbuilder)
-	if err != nil {
-		return err
-	}
+    if err !=nil{
+        return err
+    }
+
 
 	return nil
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // type builder struct
@@ -152,9 +151,12 @@ func (inst *builder) __inject__(context application.Context) error {
 
 	// from getters
 
+
 	// to instance
 
+
 	// invoke custom inject method
+
 
 	return injection.Close()
 }
@@ -176,21 +178,24 @@ func (inst *car1) __inject__(context application.Context) error {
 	}
 
 	// from getters
-	inst.BackDoor = inst.__get_BackDoor__(injection, "#door3")
-	inst.LeftDoor = inst.__get_LeftDoor__(injection, "#door1")
-	inst.RightDoor = inst.__get_RightDoor__(injection, "#door2")
+	inst.BackDoor=inst.__get_BackDoor__(injection, "#door3")
+	inst.LeftDoor=inst.__get_LeftDoor__(injection, "#door1")
+	inst.RightDoor=inst.__get_RightDoor__(injection, "#door2")
+
 
 	// to instance
-	instance.BackDoor = inst.BackDoor
-	instance.LeftDoor = inst.LeftDoor
-	instance.RightDoor = inst.RightDoor
+	instance.BackDoor=inst.BackDoor
+	instance.LeftDoor=inst.LeftDoor
+	instance.RightDoor=inst.RightDoor
+
 
 	// invoke custom inject method
+
 
 	return injection.Close()
 }
 
-func (inst *car1) __get_BackDoor__(injection application.Injection, selector string) *car_a924e5.Door {
+func (inst * car1) __get_BackDoor__(injection application.Injection,selector string) *car_a924e5.Door {
 
 	reader := injection.Select(selector)
 	defer reader.Close()
@@ -219,7 +224,7 @@ func (inst *car1) __get_BackDoor__(injection application.Injection, selector str
 
 }
 
-func (inst *car1) __get_LeftDoor__(injection application.Injection, selector string) *car_a924e5.Door {
+func (inst * car1) __get_LeftDoor__(injection application.Injection,selector string) *car_a924e5.Door {
 
 	reader := injection.Select(selector)
 	defer reader.Close()
@@ -248,7 +253,7 @@ func (inst *car1) __get_LeftDoor__(injection application.Injection, selector str
 
 }
 
-func (inst *car1) __get_RightDoor__(injection application.Injection, selector string) *car_a924e5.Door {
+func (inst * car1) __get_RightDoor__(injection application.Injection,selector string) *car_a924e5.Door {
 
 	reader := injection.Select(selector)
 	defer reader.Close()
@@ -294,31 +299,34 @@ func (inst *car2) __inject__(context application.Context) error {
 	}
 
 	// from getters
-	inst.context2 = inst.__get_context2__(injection, "context")
-	inst.list2 = inst.__get_list2__(injection, ".info-list")
-	inst.numBool = inst.__get_numBool__(injection, "${demo.num.bool}")
-	inst.numFloat32 = inst.__get_numFloat32__(injection, "${demo.num.float32}")
-	inst.numFloat64 = inst.__get_numFloat64__(injection, "${demo.num.float64}")
-	inst.numInt32 = inst.__get_numInt32__(injection, "${demo.num.int32}")
-	inst.numInt64 = inst.__get_numInt64__(injection, "${demo.num.int64}")
-	inst.numString = inst.__get_numString__(injection, "${demo.num.string}")
+	inst.context2=inst.__get_context2__(injection, "context")
+	inst.list2=inst.__get_list2__(injection, ".info-list")
+	inst.numBool=inst.__get_numBool__(injection, "${demo.num.bool}")
+	inst.numFloat32=inst.__get_numFloat32__(injection, "${demo.num.float32}")
+	inst.numFloat64=inst.__get_numFloat64__(injection, "${demo.num.float64}")
+	inst.numInt32=inst.__get_numInt32__(injection, "${demo.num.int32}")
+	inst.numInt64=inst.__get_numInt64__(injection, "${demo.num.int64}")
+	inst.numString=inst.__get_numString__(injection, "${demo.num.string}")
+
 
 	// to instance
 
+
 	// invoke custom inject method
 	err = inst.gao1xiao(injection)
-	if err != nil {
-		return err
+	if err !=nil {
+	    return err
 	}
+
 
 	return injection.Close()
 }
 
-func (inst *car2) __get_context2__(injection application.Injection, selector string) application.Context {
+func (inst * car2) __get_context2__(injection application.Injection,selector string) application.Context {
 	return injection.Context()
 }
 
-func (inst *car2) __get_list2__(injection application.Injection, selector string) []*configen1_ff6423.ComConfigInfo {
+func (inst * car2) __get_list2__(injection application.Injection,selector string) []*configen1_ff6423.ComConfigInfo {
 	list := make([]*configen1_ff6423.ComConfigInfo, 0)
 	reader := injection.Select(selector)
 	defer reader.Close()
@@ -330,9 +338,11 @@ func (inst *car2) __get_list2__(injection application.Injection, selector string
 		}
 		o2, ok := o1.(*configen1_ff6423.ComConfigInfo)
 		if !ok {
-			err = errors.New("bad cast, selector:" + selector)
-			injection.OnError(err)
-			return list
+			// err = errors.New("bad cast, selector:" + selector)
+			// injection.OnError(err)
+			// return list
+			// warning ...
+			continue
 		}
 		list = append(list, o2)
 	}
@@ -340,7 +350,7 @@ func (inst *car2) __get_list2__(injection application.Injection, selector string
 
 }
 
-func (inst *car2) __get_numBool__(injection application.Injection, selector string) bool {
+func (inst * car2) __get_numBool__(injection application.Injection,selector string) bool {
 	reader := injection.Select(selector)
 	defer reader.Close()
 	value, err := reader.ReadBool()
@@ -350,7 +360,7 @@ func (inst *car2) __get_numBool__(injection application.Injection, selector stri
 	return value
 }
 
-func (inst *car2) __get_numFloat32__(injection application.Injection, selector string) float32 {
+func (inst * car2) __get_numFloat32__(injection application.Injection,selector string) float32 {
 	reader := injection.Select(selector)
 	defer reader.Close()
 	value, err := reader.ReadFloat32()
@@ -360,7 +370,7 @@ func (inst *car2) __get_numFloat32__(injection application.Injection, selector s
 	return value
 }
 
-func (inst *car2) __get_numFloat64__(injection application.Injection, selector string) float64 {
+func (inst * car2) __get_numFloat64__(injection application.Injection,selector string) float64 {
 	reader := injection.Select(selector)
 	defer reader.Close()
 	value, err := reader.ReadFloat64()
@@ -370,7 +380,7 @@ func (inst *car2) __get_numFloat64__(injection application.Injection, selector s
 	return value
 }
 
-func (inst *car2) __get_numInt32__(injection application.Injection, selector string) int32 {
+func (inst * car2) __get_numInt32__(injection application.Injection,selector string) int32 {
 	reader := injection.Select(selector)
 	defer reader.Close()
 	value, err := reader.ReadInt32()
@@ -380,7 +390,7 @@ func (inst *car2) __get_numInt32__(injection application.Injection, selector str
 	return value
 }
 
-func (inst *car2) __get_numInt64__(injection application.Injection, selector string) int64 {
+func (inst * car2) __get_numInt64__(injection application.Injection,selector string) int64 {
 	reader := injection.Select(selector)
 	defer reader.Close()
 	value, err := reader.ReadInt64()
@@ -390,7 +400,7 @@ func (inst *car2) __get_numInt64__(injection application.Injection, selector str
 	return value
 }
 
-func (inst *car2) __get_numString__(injection application.Injection, selector string) string {
+func (inst * car2) __get_numString__(injection application.Injection,selector string) string {
 	reader := injection.Select(selector)
 	defer reader.Close()
 	value, err := reader.ReadString()
@@ -418,9 +428,13 @@ func (inst *door) __inject__(context application.Context) error {
 
 	// from getters
 
+
 	// to instance
+
 
 	// invoke custom inject method
 
+
 	return injection.Close()
 }
+

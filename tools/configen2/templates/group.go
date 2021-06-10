@@ -22,11 +22,12 @@ type innerTemplateGroup struct {
 
 	injectionGetterTemplate *injectionGetterTemplate
 
-	injectionGetContext  *injectionGetContextTemplate
-	injectionGetProperty *injectionGetPropertyTemplate
-	injectionGetObject   *injectionGetObjectTemplate
-	injectionGetList     *injectionGetListTemplate
-	injectionGetMap      *injectionGetMapTemplate
+	injectionGetContext     *injectionGetContextTemplate
+	injectionGetProperty    *injectionGetPropertyTemplate
+	injectionGetObject      *injectionGetObjectTemplate
+	injectionGetList        *injectionGetListTemplate
+	injectionGetMap         *injectionGetMapTemplate
+	injectionGetSimpleValue *injectionGetObjectTemplate // todo ...
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -81,6 +82,7 @@ func (inst *MainTemplateFactory) Create(ac application.Context) (configen2.CodeT
 	group.injectionGetMap = &injectionGetMapTemplate{}
 	group.injectionGetObject = &injectionGetObjectTemplate{}
 	group.injectionGetProperty = &injectionGetPropertyTemplate{}
+	group.injectionGetSimpleValue = &injectionGetObjectTemplate{}
 
 	// add to templist
 	templist = append(templist, group.mainTemplate)
@@ -94,6 +96,7 @@ func (inst *MainTemplateFactory) Create(ac application.Context) (configen2.CodeT
 	templist = append(templist, group.injectionGetMap)
 	templist = append(templist, group.injectionGetObject)
 	templist = append(templist, group.injectionGetProperty)
+	templist = append(templist, group.injectionGetSimpleValue)
 
 	// init
 	for index := range templist {

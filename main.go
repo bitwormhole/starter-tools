@@ -83,33 +83,3 @@ func tryMain(cb application.ConfigBuilder) error {
 	fmt.Println("exit with code ", code)
 	return nil
 }
-
-/*
-	cmd, more := parseArguments(args)
-	args = more
-
-	if cmd == "about" {
-		return help.RunAbout(args)
-
-	} else if cmd == "configen" {
-		return configenx.Run(args)
-
-	} else if cmd == "configen1disable" {
-		return configen1.Run(args)
-
-	} else if cmd == "configen2disable" {
-		return configen2.Run(args)
-
-	} else if cmd == "help" {
-		return help.RunHelpDetail(args)
-
-	} else if cmd == "version" {
-		return help.RunVersion(args)
-
-	} else {
-		// same as 'help'
-		return help.RunHelpDetail(args)
-	}
-	//	return errors.New("bad command: " + cmd)
-}
-*/

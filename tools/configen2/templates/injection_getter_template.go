@@ -57,20 +57,23 @@ func (inst *injectionGetterTemplate) propertyInjectionGetterInner(ctx *configen2
 	selector := strings.TrimSpace(ctx.Injection.Selector)
 	fieldType := ctx.Injection.FieldType
 
-	if inst.isSelectorForObject(selector) {
-		return inst.group.injectionGetObject.Build(ctx)
+	if inst.isSelectorForProperty(selector, fieldType) {
+		return inst.group.injectionGetProperty.Build(ctx)
 
 	} else if inst.isSelectorForList(selector, fieldType) {
 		return inst.group.injectionGetList.Build(ctx)
 
-	} else if inst.isSelectorForProperty(selector) {
-		return inst.group.injectionGetProperty.Build(ctx)
-
 	} else if inst.isSelectorForMap(selector, fieldType) {
 		return inst.group.injectionGetMap.Build(ctx)
 
-	} else if inst.isSelectorForContext(selector) {
+	} else if inst.isSelectorForContext(selector, fieldType) {
 		return inst.group.injectionGetContext.Build(ctx)
+
+	} else if inst.isSelectorForSimpleValue(selector, fieldType) {
+		return inst.group.injectionGetSimpleValue.Build(ctx)
+
+	} else if inst.isSelectorForObject(selector, fieldType) {
+		return inst.group.injectionGetObject.Build(ctx)
 
 	} else {
 		// unsupported
@@ -82,30 +85,34 @@ func (inst *injectionGetterTemplate) propertyInjectionGetterInner(ctx *configen2
 func (inst *injectionGetterTemplate) isSelectorForMap(selector string, fieldType string) bool {
 	// class selector (map)
 	index := strings.Index(fieldType, "]")
-	b1 := strings.HasPrefix(selector, ".")
+	b1 := (0 < index)
 	b2 := strings.HasPrefix(fieldType, "map[")
-	b3 := (0 < index)
-	return b1 && b2 && b3
+	return b1 && b2
 }
 
 func (inst *injectionGetterTemplate) isSelectorForList(selector string, fieldType string) bool {
 	// class selector (list)
-	b1 := strings.HasPrefix(selector, ".")
-	b2 := strings.HasPrefix(fieldType, "[]")
-	return b1 && b2
+	return strings.HasPrefix(fieldType, "[]")
 }
 
-func (inst *injectionGetterTemplate) isSelectorForContext(selector string) bool {
+func (inst *injectionGetterTemplate) isSelectorForContext(selector string, fieldType string) bool {
 	return selector == "context"
 }
 
-func (inst *injectionGetterTemplate) isSelectorForProperty(selector string) bool {
+func (inst *injectionGetterTemplate) isSelectorForProperty(selector string, fieldType string) bool {
 	const prefix = "${"
 	const suffix = "}"
 	return strings.HasPrefix(selector, prefix) && strings.HasSuffix(selector, suffix)
 }
 
-func (inst *injectionGetterTemplate) isSelectorForObject(selector string) bool {
+func (inst *injectionGetterTemplate) isSelectorForObject(selector string, fieldType string) bool {
 	// id selector
-	return strings.HasPrefix(selector, "#")
+	return true
+}
+
+func (inst *injectionGetterTemplate) isSelectorForSimpleValue(selector string, fieldType string) bool {
+	// id selector
+	const prefix = "@value("
+	const suffix = ")"
+	return strings.HasPrefix(selector, prefix) && strings.HasSuffix(selector, suffix)
 }

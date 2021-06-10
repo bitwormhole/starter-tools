@@ -3,13 +3,13 @@
 
 package {{package.name}}
 
-// <import>
+<import>
 
 import (
 	{{import.items}}
 )
 
-// </import>
+</import>
 
 func Config(configbuilder application.ConfigBuilder) error {
 
