@@ -11,7 +11,7 @@ import (
 
 </import>
 
-func Config(configbuilder application.ConfigBuilder) error {
+func autoGenConfig(configbuilder application.ConfigBuilder) error {
 
 	cominfobuilder := &config.ComInfoBuilder{}
 	err := errors.New("OK")
