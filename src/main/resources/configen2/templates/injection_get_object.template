@@ -4,7 +4,7 @@
 
 	cnt := reader.Count()
 	if cnt != 1 {
-		err := errors.New("select.result.count != 1")
+		err := errors.New("select.result.count != 1, selector="+selector)
 		injection.OnError(err)
 		return nil
 	}
